@@ -8,7 +8,9 @@ from oscar.core.loading import get_class, get_classes, get_model
 Country = get_model('address', 'Country')
 BillingAddress = get_model("order", "BillingAddress")
 
+
 class BillingAddressForm(payment_forms.BillingAddressForm):
+
     """
     Extended version of the core billing address form that adds a field so
     customers can choose to re-use their shipping address.

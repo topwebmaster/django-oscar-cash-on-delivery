@@ -11,10 +11,11 @@ from cashondelivery import gateway
 
 BillingAddress = get_model("order", "BillingAddress")
 
+
 class PaymentDetailsView(PaymentDetailsView):
     template_name = 'cashondelivery/payment_details.html'
     template_name_preview = 'cashondelivery/preview.html'
-    
+
     def get_context_data(self, **kwargs):
         ctx = super(PaymentDetailsView, self).get_context_data(**kwargs)
         if 'billing_address_form' not in kwargs:
@@ -52,7 +53,7 @@ class PaymentDetailsView(PaymentDetailsView):
             if address_form.cleaned_data["same_as_shipping"] == "new":
                 address_fields = dict(
                     (k, v) for (k, v) in address_form.instance.__dict__.items()
-                    if not k.startswith('_') and not k.startswith('same_as_shipping')) 
+                    if not k.startswith('_') and not k.startswith('same_as_shipping'))
                 self.checkout_session.bill_to_new_address(address_fields)
             return self.render_preview(
                 request, billing_address_form=address_form)
@@ -63,7 +64,7 @@ class PaymentDetailsView(PaymentDetailsView):
             request, billing_address_form=address_form)
 
     def handle_payment(self, order_number, total, **kwargs):
-        reference = gateway.create_transaction(order_number,total)
+        reference = gateway.create_transaction(order_number, total)
         source_type, is_created = SourceType.objects.get_or_create(
             name='Cash on Delivery')
         source = Source(source_type=source_type,

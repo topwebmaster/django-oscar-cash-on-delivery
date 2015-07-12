@@ -7,16 +7,18 @@ from django.utils.translation import ugettext_lazy as _
 def _make_uuid():
     return str(uuid.uuid4())
 
+
 class CashOnDeliveryTransaction(models.Model):
     order_number = models.CharField(max_length=128)
     date_created = models.DateTimeField(auto_now_add=True)
     amount = models.DecimalField(max_digits=12, decimal_places=2, null=True,
                                  blank=True)
     currency = models.CharField(max_length=8, null=True, blank=True)
-    reference = models.CharField(max_length=100,blank=True, unique=True, default=_make_uuid)
+    reference = models.CharField(
+        max_length=100, blank=True, unique=True, default=_make_uuid)
     confirmed = models.BooleanField(default=False)
     date_confirmed = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
         ordering = ('-date_created',)
         app_label = 'cashondelivery'
