@@ -66,7 +66,7 @@ class BillingAddressForm(payment_forms.BillingAddressForm):
         try:
             instance.state = self.cleaned_data["stateorcounty"].name
         except:
-            instance.state = self.cleaned_data['country']
+            pass
         if commit:
             instance.save()
         return instance
