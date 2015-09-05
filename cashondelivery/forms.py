@@ -63,7 +63,10 @@ class BillingAddressForm(payment_forms.BillingAddressForm):
                 billing_addr.save()
             return billing_addr
         instance = super(BillingAddressForm, self).save(commit=False)
-        instance.state = self.cleaned_data["stateorcounty"].name
+        try:
+            instance.state = self.cleaned_data["stateorcounty"].name
+        except:
+            instance.state = self.cleaned_data['country']
         if commit:
             instance.save()
         return instance
