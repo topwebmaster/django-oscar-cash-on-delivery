@@ -12,9 +12,9 @@
             <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
         </li>
         <li>
-            <a href="{% url 'cashondelivery-transaction-list' %}">{% trans "Cash on Delivery" %}</a>
+            {% trans "Cash on Delivery" %}
         </li>
-        <li class="active">{% trans "Transactions" %}</li>
+        <li class="active"><a href="{% url 'cashondelivery-transaction-list' %}">{% trans "Transactions" %}</a></li>
     </ul>
 {% endblock %}
 
