@@ -1,7 +1,6 @@
 {% extends 'dashboard/layout.html' %}
 {% load currency_filters %}
 {% load i18n %}
-{% load url from future %}
 
 {% block title %}
     {% trans "Cash on Delivery transaction" %} {{ txn.pnref }} | {{ block.super }}
@@ -13,7 +12,7 @@
             <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
         </li>
         <li>
-            <a href="{% url 'dashboard:cashondelivery-transaction-list' %}">{% trans "Cash on Delivery" %}</a>
+            <a href="{% url 'cashondelivery-transaction-list' %}">{% trans "Cash on Delivery" %}</a>
         </li>
         <li class="active">
             {% blocktrans with reference=txn.reference %}Transaction {{ reference }}{% endblocktrans %}
