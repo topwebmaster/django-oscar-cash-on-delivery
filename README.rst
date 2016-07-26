@@ -10,7 +10,7 @@ Installation
 
 * Install: `pip install -e git+http://github.com/pauloprea/django-oscar-cash-on-delivery#egg=cashondelivery`
 * Add ``cashondelivery`` to ``INSTALLED_APPS``
-* Add ``cashondelivery`` urls to project urls:
+* Add ``cashondelivery`` urls to project urls:  
 
 .. code-block:: python
     from cashondelivery.dashboard.app import application as cashon
@@ -18,7 +18,7 @@ Installation
     url(r'^dashboard/cash-on/', include(cashon.urls)),
 
 
-* Use cashondelivery checkout app
+* Use cashondelivery checkout app:
 
 .. code-block:: python
 
