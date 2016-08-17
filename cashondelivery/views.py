@@ -1,13 +1,17 @@
-from django.contrib import messages
 from django import http
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
+
 from oscar.apps.checkout.views import PaymentDetailsView
-from oscar.core.loading import get_class, get_classes, get_model
-from oscar.apps.payment.models import SourceType, Source
+from oscar.core.loading import get_class
+from oscar.core.loading import get_classes
+from oscar.core.loading import get_model
+from oscar.apps.payment.models import Source
+from oscar.apps.payment.models import SourceType
+
 from cashondelivery.forms import BillingAddressForm
 from cashondelivery import gateway
-
 
 BillingAddress = get_model("order", "BillingAddress")
 
@@ -38,8 +42,7 @@ class PaymentDetailsView(PaymentDetailsView):
             return BillingAddressForm(billing_address)
         billing_addr = BillingAddress()
         addr.populate_alternative_model(billing_addr)
-        return BillingAddressForm(billing_address,
-                                  instance=billing_addr)
+        return BillingAddressForm(billing_address, instance=billing_addr)
 
     def handle_payment_details_submission(self, request):
         # Validate the submitted forms
@@ -55,8 +58,7 @@ class PaymentDetailsView(PaymentDetailsView):
                     (k, v) for (k, v) in address_form.instance.__dict__.items()
                     if not k.startswith('_') and not k.startswith('same_as_shipping'))
                 self.checkout_session.bill_to_new_address(address_fields)
-            return self.render_preview(
-                request, billing_address_form=address_form)
+            return self.render_preview(request, billing_address_form=address_form)
 
         # Forms are invalid - show them to the customer along with the
         # validation errors.
@@ -65,12 +67,12 @@ class PaymentDetailsView(PaymentDetailsView):
 
     def handle_payment(self, order_number, total, **kwargs):
         reference = gateway.create_transaction(order_number, total)
-        source_type, is_created = SourceType.objects.get_or_create(
-            name='Cash on Delivery')
-        source = Source(source_type=source_type,
-                        currency=total.currency,
-                        amount_allocated=total.incl_tax,
-                        amount_debited=total.incl_tax)
+        source_type, is_created = SourceType.objects.get_or_create(name='Cash on Delivery')
+        source = Source(
+            source_type=source_type,
+            currency=total.currency,
+            amount_allocated=total.incl_tax,
+            amount_debited=total.incl_tax
+        )
         self.add_payment_source(source)
-        self.add_payment_event('Issued', total.incl_tax,
-                               reference=reference)
+        self.add_payment_event('Issued', total.incl_tax, reference=reference)
