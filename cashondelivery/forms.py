@@ -2,7 +2,9 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from oscar.apps.payment import forms as payment_forms
-from oscar.core.loading import get_class, get_classes, get_model
+from oscar.core.loading import get_class
+from oscar.core.loading import get_classes
+from oscar.core.loading import get_model
 
 
 Country = get_model('address', 'Country')
