@@ -8,7 +8,7 @@ Cash on delivery payment module for django-oscar
 Installation
 ------------
 
-* Install: `pip install -e git+http://github.com/pauloprea/django-oscar-cash-on-delivery#egg=cashondelivery`
+* Install: `pip install -e git+https://github.com/michaelkuty/django-oscar-cash-on-delivery#egg=cashondelivery`
 * Add ``cashondelivery`` to ``INSTALLED_APPS``
 * Add ``cashondelivery`` urls to project urls:
 
