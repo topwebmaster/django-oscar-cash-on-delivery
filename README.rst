@@ -8,7 +8,7 @@ Cash on delivery payment module for django-oscar
 Installation
 ------------
 
-* Install: `pip install -e git+https://github.com/michaelkuty/django-oscar-cash-on-delivery#egg=cashondelivery`
+* Install: `pip install -e git+https://github.com/winzard/django-oscar-cash-on-delivery#egg=cashondelivery`
 * Add ``cashondelivery`` to ``INSTALLED_APPS``
 * Add ``cashondelivery`` urls to project urls:
 
@@ -19,13 +19,18 @@ Installation
     url(r'^dashboard/cash-on/', include(cashon.urls)),
 
 
-* Use cashondelivery checkout app:
+* Fork django-oscar checkout app and use PaymentDetailsView from sandbox/checkout/views.py:
 
 .. code-block:: python
 
-    # patch checkout app where we override the payment details view
+    # your checkout/app.py
     from oscar.apps.checkout import app
-    from cashondelivery.app import application as checkout_app
+    from .views import PaymentDetailsView
 
-    app.application = checkout_app
+    class CheckoutApplication(app.CheckoutApplication):
+        payment_details_view = PaymentDetailsView
+
+
+    application = CheckoutApplication()
+
 
